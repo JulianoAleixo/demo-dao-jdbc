@@ -1,4 +1,5 @@
 import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
@@ -12,6 +13,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
+        DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
 
         System.out.println("===== TEST 1: seller findById =====");
         Seller seller = sellerDao.findById(1);
@@ -51,6 +53,37 @@ public class Main {
         int id = sc.nextInt();
         sellerDao.deleteById(id);
         System.out.println("Delete completed!");
+
+        System.out.println();
+        System.out.println("===== TEST 7: department findById =====");
+        Department dep = departmentDao.findById(1);
+        System.out.println(dep);
+
+        System.out.println();
+        System.out.println("===== TEST 8: department findAll =====");
+        List<Department> list = departmentDao.findAll();
+        for (Department d : list) {
+            System.out.println(d);
+        }
+
+        System.out.println();
+        System.out.println("===== TEST 9: department insert =====");
+        Department newDepartment = new Department(null, "Music");
+        departmentDao.insert(newDepartment);
+        System.out.println("Inserted! New id: " + newDepartment.getId());
+
+        System.out.println();
+        System.out.println("===== TEST 10: department update =====");
+        Department dep2 = departmentDao.findById(1);
+        dep2.setName("Food");
+        departmentDao.update(dep2);
+        System.out.println("Update completed");
+
+        System.out.println("===== TEST 11: department delete =====");
+        System.out.print("Enter id for delete test: ");
+        int id2 = sc.nextInt();
+        departmentDao.deleteById(id2);
+        System.out.println("Delete completed");
 
         sc.close();
     }
